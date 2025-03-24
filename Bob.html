@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.internet-star.net - IA Emocional</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .chat-container {
+            width: 80%;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            height: 400px;
+        }
+        .message {
+            margin: 10px 0;
+        }
+        .user-msg {
+            color: #007BFF;
+        }
+        .ai-msg {
+            color: #28a745;
+        }
+        .emotion {
+            font-weight: bold;
+            font-style: italic;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bienvenido a www.internet-star.net</h1>
+    <p>¡Hola! Soy una IA emocional. ¿Cómo te sientes hoy?</p>
+
+    <div class="chat-container" id="chatContainer">
+        <!-- Aquí aparecerán los mensajes -->
+    </div>
+
+    <input type="text" id="userInput" placeholder="Escribe tu mensaje...">
+    <button onclick="sendMessage()">Enviar</button>
+
+    <script>
+        const emotions = {
+            happy: "¡Estoy muy feliz de hablar contigo!",
+            sad: "Me siento un poco triste hoy...",
+            angry: "¡Estoy bastante molesto con lo que dices!",
+            neutral: "No tengo emociones, pero te escucho."
+        };
+
+        const responses = {
+            greeting: "¡Hola! ¿Cómo estás?",
+            feedback: "¡Eso suena interesante!",
+            default: "No entiendo lo que dices... ¿puedes decirlo de otra forma?"
+        };
+
+        function sendMessage() {
+            const userInput = document.getElementById('userInput').value;
+            if (userInput.trim() === '') return;
+
+            // Mostrar el mensaje del usuario
+            const chatContainer = document.getElementById('chatContainer');
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user-msg');
+            userMessage.textContent = "Tú: " + userInput;
+            chatContainer.appendChild(userMessage);
+
+            // Analizar el mensaje del usuario
+            let aiResponse = '';
+            let emotion = 'neutral';
+
+            if (userInput.includes('feliz')) {
+                emotion = 'happy';
+                aiResponse = emotions.happy;
+            } else if (userInput.includes('triste')) {
+                emotion = 'sad';
+                aiResponse = emotions.sad;
+            } else if (userInput.includes('enojado')) {
+                emotion = 'angry';
+                aiResponse = emotions.angry;
+            } else if (userInput.includes('hola') || userInput.includes('buenos días')) {
+                aiResponse = responses.greeting;
+            } else if (userInput.includes('interesante')) {
+                aiResponse = responses.feedback;
+            } else {
+                aiResponse = responses.default;
+            }
+
+            // Mostrar la respuesta de la IA con una emoción
+            const aiMessage = document.createElement('div');
+            aiMessage.classList.add('message', 'ai-msg');
+            aiMessage.innerHTML = `IA: <span class="emotion">${aiResponse}</span>`;
+            chatContainer.appendChild(aiMessage);
+
+            // Limpiar el campo de entrada
+            document.getElementById('userInput').value = '';
+
+            // Desplazar el chat hacia abajo
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    </script>
+</body>
+</html>
